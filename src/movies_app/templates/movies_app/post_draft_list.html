@@ -1,0 +1,16 @@
+{% extends 'movies_app/base.html' %}
+
+{% block content %}
+	{% if object_list.count == 0 %}
+	<p></p>
+	<h2>No Drafts!</h2>
+	{% else %}
+    {% for post in object_list %}
+        <div>
+            <h1><a class='title' href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <p>created: {{ post.created_date|date:'d-m-Y' }}</p>
+            <p>Content: {{ post.description|truncatechars:200 }}</p>
+        </div>
+    {% endfor %}
+    {% endif %}
+{% endblock %}

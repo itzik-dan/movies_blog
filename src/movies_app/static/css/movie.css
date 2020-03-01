@@ -1,0 +1,21 @@
+.brand{
+  font-size: 1.5em;
+}
+
+.date_posted{
+  text-align: center;
+}
+
+.link{
+  color:#080808;
+}
+.postcontent{
+  font-family: 'Kalam', cursive;
+  font-size: 1.5em;
+}
+
+.btn-comment{
+  position: absolute;
+  right: 0px;
+}
+

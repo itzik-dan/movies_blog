@@ -1,0 +1,19 @@
+{% extends 'movies_app/base.html' %}
+
+{% block content %}
+
+
+    {% for post in object_list %}
+    <hr>
+        <div class="post">
+
+            <h1><a class='link' href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+            <div class="date">
+                <p>Posted on: {{ post.published_date|date:"D M Y"}}</p>
+                <p>Posted By: {{ post.post_user}}</p>
+            </div>
+            <a class='link' href="{% url 'post_detail' pk=post.pk %}">Comments approved by author: {{ post.comments_approval.count }}</a>
+        </div>
+    {% endfor %}
+
+{% endblock %}

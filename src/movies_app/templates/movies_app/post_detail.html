@@ -1,0 +1,51 @@
+{% extends 'movies_app/base.html' %}
+
+{% block content %}
+
+
+        <h1>{{ post.title }}</h1>
+
+        {% if post.published_date%}
+            <div>
+                {{ post.published_date }}
+            </div>
+
+        {% elif post.post_user == user %}
+            <a class="btn btn btn-dark" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
+      <p></p>
+      <p>{{ post.post_user }} score: {{post.score}}</p>
+      <p class='postcontent' >{{ post.description|safe|linebreaksbr }}</p>
+
+
+      {% if user.is_authenticated and post.post_user == user%}
+          <a class="btn btn-dark" href="{% url 'post_edit' pk=post.pk %}"><span class="fa fa-pencil"></span></a>
+          <a class="btn btn-dark" href="{% url 'post_remove' pk=post.pk %}"><span class="fa fa-remove"></span></a>
+      {% endif %}
+
+
+  <hr>
+  <a class="btn btn-dark btn-comment" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+  <div class="container">
+
+
+  {% for comment in post.comments.all %}
+  <br>
+      {% if user.is_authenticated or comment.approved_comment %}
+
+              <strong>{{ comment.created_date }}</strong>
+              {% if not comment.approved_comment and post.post_user == user%}
+                  <a class="btn btn-dark" href="{% url 'comment_remove' pk=comment.pk %}"><span class="fa fa-remove"></span></a>
+                  <a class="btn btn-dark" href="{% url 'comment_approve' pk=comment.pk %}"><span class="fa fa-check"></span></a>
+              {% endif %}
+
+          <p>{{ comment.description|safe|linebreaks }}</p>
+          <p>Posted by: <strong>{{ comment.comment_user }}</strong></p>
+
+      {% endif %}
+  {% empty %}
+      <p>No comments posted.</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
